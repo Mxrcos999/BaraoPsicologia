@@ -1,0 +1,14 @@
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.csproj.AssemblyReference.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.AssemblyInfoInputs.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.AssemblyInfo.cs
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.csproj.CoreCompileInputs.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\bin\Debug\net8.0\BaraoPsicologia.Infra.deps.json
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\bin\Debug\net8.0\BaraoPsicologia.Infra.runtimeconfig.json
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\bin\Debug\net8.0\BaraoPsicologia.Infra.dll
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\bin\Debug\net8.0\BaraoPsicologia.Infra.pdb
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.dll
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\refint\BaraoPsicologia.Infra.dll
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.pdb
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\BaraoPsicologia.Infra.genruntimeconfig.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Infra\obj\Debug\net8.0\ref\BaraoPsicologia.Infra.dll

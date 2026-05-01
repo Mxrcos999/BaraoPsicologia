@@ -1,0 +1,5 @@
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Application\obj\Debug\net8.0\BaraoPsicologia.Application.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Application\obj\Debug\net8.0\BaraoPsicologia.Application.AssemblyInfoInputs.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Application\obj\Debug\net8.0\BaraoPsicologia.Application.AssemblyInfo.cs
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Application\obj\Debug\net8.0\BaraoPsicologia.Application.csproj.CoreCompileInputs.cache
+C:\Users\marco\source\repos\BaraoPsicologia\BaraoPsicologia.Application\obj\Debug\net8.0\BaraoPsicologia.Application.csproj.AssemblyReference.cache
