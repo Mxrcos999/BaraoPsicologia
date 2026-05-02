@@ -1,8 +1,7 @@
-﻿using BaraoFeedback.Application.Services.Email;
-using BaraoFeedback.Application.Services.User;
-using BaraoFeedback.Domain.Entities;
-using BaraoPsicologia.Application.Dto.Shared;
+﻿using BaraoPsicologia.Application.Dto.Shared;
 using BaraoPsicologia.Application.Dto.User;
+using BaraoPsicologia.Application.Interfaces.Services;
+using BaraoPsicologia.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
@@ -10,18 +9,17 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Net;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using System.Security.Policy;
 
 public class IdentityService : IIdentityService
 {
-    private readonly SignInManager<ApplicationUser> _signInManager;
-    private readonly UserManager<ApplicationUser> _userManager;
-    private readonly IHttpContextAccessor _httpContextAccessor; 
+    private readonly SignInManager<User> _signInManager;
+    private readonly UserManager<User> _userManager;
+    private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IEmailService _emailSender;
-    private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
+    private readonly IPasswordHasher<User> _passwordHasher;
     private readonly JwtOptions _jwtOptions;
 
-    public IdentityService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IEmailService emailSender, IPasswordHasher<ApplicationUser> passwordHasher)
+    public IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IEmailService emailSender, IPasswordHasher<User> passwordHasher)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -65,7 +63,7 @@ public class IdentityService : IIdentityService
     public async Task<UserLoginResponse> LoginAsync(UserLoginRequest userLogin)
     {
         SignInResult signInResult = await _signInManager.PasswordSignInAsync(userLogin.UserName, userLogin.Password, isPersistent: false, lockoutOnFailure: true);
-  
+
         if (signInResult.Succeeded)
         {
             var credenciais = await GenerateCredentials(userLogin.UserName);
@@ -95,13 +93,12 @@ public class IdentityService : IIdentityService
 
         return userLoginResponse;
     }
-    public async Task<UserRegisterResponse> RegisterAdminAsync(string type, AdminRegisterRequest request)
+    public async Task<UserRegisterResponse> RegisterAdminAsync(string profile, AdminRegisterRequest request)
     {
-        var user = new ApplicationUser()
+        var user = new User()
         {
             Email = request.Email,
-            Type = type,
-            ReceiveEmails = request.ReceiveEmails,
+            Profile = profile,
             Name = request.Name,
             UserName = request.Email,
         };
@@ -129,44 +126,31 @@ public class IdentityService : IIdentityService
 
         return new();
     }
-    public async Task<UserRegisterResponse> RegisterStudentAsync(string type, StudentRegisterRequest userRegister)
+    public async Task<UserRegisterResponse> RegisterStudentAsync(string profile, StudentRegisterRequest userRegister)
     {
         string email = userRegister.StudentCode + "@baraodemaua.edu.br";
-        var user = new ApplicationUser()
+        var user = new User()
         {
             Email = email,
-            Type = type,
+            Profile = profile, 
             Name = userRegister.Name,
             UserName = userRegister.StudentCode,
-        };         
+        };
 
         IdentityResult result = await _userManager.CreateAsync(user, userRegister.Password);
 
-        if(result.Succeeded)
+        if (result.Succeeded)
             await SendConfirmMail(email);
 
         return await ValidateRegisterAsync(result, email);
     }
 
-    public async Task<DefaultResponse> GetUsers()
-    {
-        var users = _userManager.Users
-            .Where(x => x.Type == "admin")
-            .Select(u => new { u.Id, u.UserName, u.Name, u.Email, u.ReceiveEmails })
-            .ToList();
-
-        var response = new DefaultResponse();
-
-        response.Data = users;
-
-        return response;
-    }
     public async Task<DefaultResponse> UpdatePasswordAsync(UpdatePassword dto)
     {
         var userId = _httpContextAccessor.HttpContext?.User.FindFirstValue(ClaimTypes.NameIdentifier);
- 
-        var user = await _userManager.FindByIdAsync(userId); 
-        var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.Password); 
+
+        var user = await _userManager.FindByIdAsync(userId);
+        var result = await _userManager.ChangePasswordAsync(user, dto.CurrentPassword, dto.Password);
 
         return new DefaultResponse();
     }
@@ -210,13 +194,13 @@ public class IdentityService : IIdentityService
 
         return userRegisterResponse;
     }
-    public async Task<IEnumerable<ApplicationUser>> GetUser()
+    public async Task<IEnumerable<User>> GetUser()
     {
         var result = _userManager.Users.AsEnumerable();
 
         return result;
 
-    } 
+    }
 
     protected async Task<UserLoginResponse> GenerateCredentials(string username)
     {
@@ -235,8 +219,8 @@ public class IdentityService : IIdentityService
         return new UserLoginResponse
         (
             true,
-            user.Type,
-            accessToken, 
+            user.Profile,
+            accessToken,
             refreshToken,
             expirationTimeRefreshToken,
             expirationAcessToken,
@@ -252,7 +236,7 @@ public class IdentityService : IIdentityService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-    private async Task<IList<Claim>> GetClaims(ApplicationUser user, bool adicionarClaimsUsuario)
+    private async Task<IList<Claim>> GetClaims(User user, bool adicionarClaimsUsuario)
     {
         var claims = await _userManager.GetClaimsAsync(user);
 
@@ -300,14 +284,14 @@ public class IdentityService : IIdentityService
         var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
 
         var encodedToken = WebUtility.UrlEncode(token);
-         
+
         var confirmationLink = $"https://baraotickets-dxcafcc6h9h0aga6.eastus2-01.azurewebsites.net/user/ConfirmEmail?userId={user.Id}&token={encodedToken}";
         await _emailSender.SendConfirmMail(email, user.Name, confirmationLink);
         return confirmationLink;
     }
 
     public async Task<bool> UnlockUser(string userId, string token)
-    { 
+    {
         var user = await _userManager.FindByIdAsync(userId);
 
         token = WebUtility.UrlDecode(token);
@@ -354,16 +338,7 @@ public class IdentityService : IIdentityService
         var random = new Random();
         return new string(Enumerable.Repeat(chars, length)
             .Select(s => s[random.Next(s.Length)]).ToArray());
-    }
-
-    public async Task<bool> SetReceiveEmailAsync(string id, bool flag)
-    {
-        var user = await _userManager.FindByIdAsync(id);
-
-        user.ReceiveEmails = flag;
-
-        return (await _userManager.UpdateAsync(user)).Succeeded;
-    }
+    } 
 
 
 }

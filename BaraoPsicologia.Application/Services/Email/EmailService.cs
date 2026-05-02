@@ -1,5 +1,5 @@
 ﻿using BaraoPsicologia.Application.Dto.Shared;
-using BaraoPsicologia.Domain.Interfaces.Services;
+using BaraoPsicologia.Application.Interfaces.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;

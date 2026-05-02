@@ -877,6 +877,19 @@
         "build": {
           "buildTransitive/netcoreapp3.1/_._": {}
         }
+      },
+      "BaraoPsicologia.Domain/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v8.0",
+        "dependencies": {
+          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "8.0.13"
+        },
+        "compile": {
+          "bin/placeholder/BaraoPsicologia.Domain.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/BaraoPsicologia.Domain.dll": {}
+        }
       }
     }
   },
@@ -2238,10 +2251,16 @@
         "system.threading.channels.nuspec",
         "useSharedDesignerContext.txt"
       ]
+    },
+    "BaraoPsicologia.Domain/1.0.0": {
+      "type": "project",
+      "path": "../BaraoPsicologia.Domain/BaraoPsicologia.Domain.csproj",
+      "msbuildProject": "../BaraoPsicologia.Domain/BaraoPsicologia.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net8.0": [
+      "BaraoPsicologia.Domain >= 1.0.0",
       "Microsoft.AspNetCore.Identity.EntityFrameworkCore >= 8.0.13",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.13"
     ]
@@ -2278,7 +2297,11 @@
       "frameworks": {
         "net8.0": {
           "targetAlias": "net8.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {
+              "projectPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
