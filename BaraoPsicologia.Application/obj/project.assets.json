@@ -6085,9 +6085,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
+      "projectUniqueName": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
       "projectName": "BaraoPsicologia.Application",
-      "projectPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
+      "projectPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
       "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\obj\\",
       "projectStyle": "PackageReference",
@@ -6111,8 +6111,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {
-              "projectPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj"
+            "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {
+              "projectPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj"
             }
           }
         }

@@ -1,6 +1,5 @@
 ﻿using BaraoPsicologia.Application.Dto.Shared;
 using BaraoPsicologia.Application.Interfaces.Services;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Options;
 using System.Net.Mail;
 using System.Text;
@@ -11,12 +10,10 @@ namespace BaraoPsicologia.Application.Services.Email;
 public class EmailService : IEmailService
 {
     private readonly EmailSenderOptions _options;
-    private readonly UserManager<ApplicationUser> _userManager;
 
-    public EmailService(IOptions<EmailSenderOptions> options, UserManager<ApplicationUser> userManager)
+    public EmailService(IOptions<EmailSenderOptions> options)
     {
         _options = options.Value;
-        _userManager = userManager;
     }
 
     private SmtpClient ObterClient()
@@ -57,7 +54,8 @@ public class EmailService : IEmailService
 
     private async Task<bool> EnviarEmail(string destinatario, string assunto, string corpo)
     {
-        return await EnviarEmail(new[] { destinatario }, assunto, corpo);
+        var r = await EnviarEmail(new[] { destinatario }, assunto, corpo);
+        return r.Success;
     }
 
     private async Task<BaseResponse<bool>> EnviarEmail(string[] destinatarios, string assunto, string corpo)

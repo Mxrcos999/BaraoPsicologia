@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {}
+    "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {}
   },
   "projects": {
-    "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {
+    "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj",
+        "projectUniqueName": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj",
         "projectName": "BaraoPsicologia.Domain",
-        "projectPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj",
+        "projectPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\BaraoPsicologia.Domain.csproj",
         "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\obj\\",
+        "outputPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -11,6 +11,7 @@ public interface IIdentityService
     Task<DefaultResponse> UpdateUserAsync(string userId, UpdateUserRequest model);
     Task<bool> UnlockUser(string userId, string token);
     Task<DefaultResponse> UpdatePasswordAsync(UpdatePassword dto);
+    Task<DefaultResponse> ForgotPassword(ForgotPasswordRequest model);
     Task<UserLoginResponse> LoginAsync(UserLoginRequest userLogin);
     Task<UserRegisterResponse> RegisterAdminAsync(string type, AdminRegisterRequest request);
     Task<UserRegisterResponse> RegisterStudentAsync(string type, StudentRegisterRequest userRegister);

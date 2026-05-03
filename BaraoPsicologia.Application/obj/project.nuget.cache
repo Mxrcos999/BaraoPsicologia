@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "FsVaDtwrGjvtuz+2eC8zx72/Ks55l0siepF0FqaTo5Cm3SL95kMDNpImR7kLXWwNxxL77eqWZc6IxgWeQcIgHw==",
+  "dgSpecHash": "iyJKT4CubQzG78WLQoqias36wE6yeZ/sQf3tvDoG72hL90YmkvGht05sI1a89DvjD8ZMI4E8Ak7tDejCKty1pw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
+  "projectFilePath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\marco\\.nuget\\packages\\epplus\\7.0.8\\epplus.7.0.8.nupkg.sha512",
     "C:\\Users\\marco\\.nuget\\packages\\epplus.interfaces\\6.1.1\\epplus.interfaces.6.1.1.nupkg.sha512",

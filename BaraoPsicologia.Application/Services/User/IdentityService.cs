@@ -12,14 +12,14 @@ using System.Security.Cryptography;
 
 public class IdentityService : IIdentityService
 {
-    private readonly SignInManager<User> _signInManager;
-    private readonly UserManager<User> _userManager;
+    private readonly SignInManager<ApplicationUser> _signInManager;
+    private readonly UserManager<ApplicationUser> _userManager;
     private readonly IHttpContextAccessor _httpContextAccessor;
     private readonly IEmailService _emailSender;
-    private readonly IPasswordHasher<User> _passwordHasher;
+    private readonly IPasswordHasher<ApplicationUser> _passwordHasher;
     private readonly JwtOptions _jwtOptions;
 
-    public IdentityService(SignInManager<User> signInManager, UserManager<User> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IEmailService emailSender, IPasswordHasher<User> passwordHasher)
+    public IdentityService(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager, IOptions<JwtOptions> jwtOptions, IHttpContextAccessor httpContextAccessor, IEmailService emailSender, IPasswordHasher<ApplicationUser> passwordHasher)
     {
         _signInManager = signInManager;
         _userManager = userManager;
@@ -34,6 +34,11 @@ public class IdentityService : IIdentityService
         var response = new DefaultResponse();
 
         var user = await _userManager.FindByIdAsync(model.UserId);
+        if (user == null)
+        {
+            response.Errors.AddError("Usuário não encontrado.");
+            return response;
+        }
 
         user.Name = model.Name;
 
@@ -49,9 +54,19 @@ public class IdentityService : IIdentityService
         var response = new DefaultResponse();
 
         var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            response.Errors.AddError("Usuário não encontrado.");
+            return response;
+        }
 
         user.Name = model.Name;
         user.Email = model.Email;
+        user.Profile = model.Profile;
+        user.ReceiveEmails = model.ReceiveEmails;
+
+        await _userManager.SetUserNameAsync(user, model.Username);
+        await _userManager.SetEmailAsync(user, model.Email);
 
         var result = await _userManager.UpdateAsync(user);
 
@@ -95,7 +110,7 @@ public class IdentityService : IIdentityService
     }
     public async Task<UserRegisterResponse> RegisterAdminAsync(string profile, AdminRegisterRequest request)
     {
-        var user = new User()
+        var user = new ApplicationUser()
         {
             Email = request.Email,
             Profile = profile,
@@ -120,16 +135,21 @@ public class IdentityService : IIdentityService
     }
     public async Task<DefaultResponse> DeleteUser(string id)
     {
+        var response = new DefaultResponse();
         var user = await _userManager.FindByIdAsync(id);
+        if (user == null)
+        {
+            response.Errors.AddError("Usuário não encontrado.");
+            return response;
+        }
 
         await _userManager.DeleteAsync(user);
-
         return new();
     }
     public async Task<UserRegisterResponse> RegisterStudentAsync(string profile, StudentRegisterRequest userRegister)
     {
         string email = userRegister.StudentCode + "@baraodemaua.edu.br";
-        var user = new User()
+        var user = new ApplicationUser()
         {
             Email = email,
             Profile = profile, 
@@ -194,7 +214,7 @@ public class IdentityService : IIdentityService
 
         return userRegisterResponse;
     }
-    public async Task<IEnumerable<User>> GetUser()
+    public async Task<IEnumerable<ApplicationUser>> GetUser()
     {
         var result = _userManager.Users.AsEnumerable();
 
@@ -213,17 +233,14 @@ public class IdentityService : IIdentityService
 
         var accessToken = GenerateToken(accessTokenClaims, dataExpiracaoAccessToken);
         var refreshToken = GenerateToken(refreshTokenClaims, dataExpiracaoRefreshToken);
-        var expirationAcessToken = _jwtOptions.AccessTokenExpiration.ToString();
-        var expirationTimeRefreshToken = _jwtOptions.RefreshTokenExpiration.ToString();
-
         return new UserLoginResponse
         (
             true,
             user.Profile,
             accessToken,
             refreshToken,
-            expirationTimeRefreshToken,
-            expirationAcessToken,
+            _jwtOptions.RefreshTokenExpiration,
+            _jwtOptions.AccessTokenExpiration,
             user.Name,
             user.Id,
             user.Email
@@ -236,7 +253,7 @@ public class IdentityService : IIdentityService
 
         return new JwtSecurityTokenHandler().WriteToken(token);
     }
-    private async Task<IList<Claim>> GetClaims(User user, bool adicionarClaimsUsuario)
+    private async Task<IList<Claim>> GetClaims(ApplicationUser user, bool adicionarClaimsUsuario)
     {
         var claims = await _userManager.GetClaimsAsync(user);
 
@@ -305,7 +322,7 @@ public class IdentityService : IIdentityService
         return false;
     }
 
-    public async Task<DefaultResponse> ForgotPassword(ForgotPasswordDto model)
+    public async Task<DefaultResponse> ForgotPassword(ForgotPasswordRequest model)
     {
         var response = new DefaultResponse();
         var user = await _userManager.FindByEmailAsync(model.Email);
@@ -341,9 +358,4 @@ public class IdentityService : IIdentityService
     } 
 
 
-}
-
-public class ForgotPasswordDto
-{
-    public string Email { get; set; }
 }

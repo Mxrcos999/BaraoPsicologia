@@ -5,30 +5,45 @@ namespace BaraoPsicologia.Application.Dto.User;
 
 public class UserLoginResponse
 {
+    [JsonIgnore]
+    public Errors Errors { get; set; } = new();
 
-    public bool Success => Errors.Message.Count == 0 ? true : false;
+    [JsonPropertyName("errors")]
+    public Dictionary<string, string[]>? ErrorsPayload =>
+        Errors.Message.Count == 0
+            ? null
+            : new Dictionary<string, string[]>
+            {
+                ["_error"] = Errors.Message.Select(e => e?.ToString() ?? "").ToArray()
+            };
 
-    public string Email { get; private set; }
-    public string Type { get; private set; }
-    public string Name { get; private set; }
-    public string Id { get; private set; }
+    [JsonPropertyName("success")]
+    public bool Success => Errors.Message.Count == 0;
+
+    public string Email { get; private set; } = string.Empty;
+    public string Type { get; private set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
+    public string Id { get; private set; } = string.Empty;
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string AccessToken { get; private set; }
-    public string? ExpirationTimeAccessToken { get; private set; }
+    public string? AccessToken { get; private set; }
+
+    /// <summary>Segundos até expiração (número esperado pela UI).</summary>
+    public int ExpirationTimeAccessToken { get; private set; }
+
     public DateTime ExpirationDateTimeAccessToken { get; private set; }
 
     [JsonIgnore(Condition = JsonIgnoreCondition.WhenWritingNull)]
-    public string RefreshToken { get; private set; }
-    public string? ExpirationTimeRefreshtoken { get; private set; }
-    public DateTime ExpirationDateTimeRefreshtoken { get; private set; }
-    public Errors Errors { get; set; } = new Errors();
+    public string? RefreshToken { get; private set; }
 
+    public int ExpirationTimeRefreshtoken { get; private set; }
+    public DateTime ExpirationDateTimeRefreshtoken { get; private set; }
 
     public UserLoginResponse(bool success)
-    { }
+    {
+    }
 
-    public UserLoginResponse(bool success, string type, string accessToken, string refreshToken, string expirationTimeRefreshtoken, string expirationTimeAccessToken, string name, string id, string email)
+    public UserLoginResponse(bool success, string type, string accessToken, string refreshToken, int expirationTimeRefreshtoken, int expirationTimeAccessToken, string name, string id, string email)
     {
         AccessToken = accessToken;
         RefreshToken = refreshToken;
