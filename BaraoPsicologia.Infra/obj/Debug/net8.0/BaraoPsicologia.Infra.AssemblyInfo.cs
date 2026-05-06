@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("BaraoPsicologia.Infra")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ab5664bc754a62a954f64083204d786235b2a45c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+df58f2b90bcb1c840ec998ea28dbb5417b55e5b7")]
 [assembly: System.Reflection.AssemblyProductAttribute("BaraoPsicologia.Infra")]
 [assembly: System.Reflection.AssemblyTitleAttribute("BaraoPsicologia.Infra")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

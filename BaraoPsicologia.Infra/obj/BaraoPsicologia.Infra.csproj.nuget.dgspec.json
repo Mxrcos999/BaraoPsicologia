@@ -11,7 +11,7 @@
         "projectName": "BaraoPsicologia.Application",
         "projectPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\BaraoPsicologia.Application.csproj",
         "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\obj\\",
+        "outputPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -163,7 +163,7 @@
         "projectName": "BaraoPsicologia.Infra",
         "projectPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Infra\\BaraoPsicologia.Infra.csproj",
         "packagesPath": "C:\\Users\\marco\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\marco\\Source\\Repos\\BaraoMauaPsicologia\\BaraoPsicologia.Infra\\obj\\",
+        "outputPath": "C:\\Users\\marco\\source\\repos\\BaraoMauaPsicologia\\BaraoPsicologia.Infra\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
