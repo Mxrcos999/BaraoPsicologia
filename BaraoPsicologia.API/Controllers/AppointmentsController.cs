@@ -50,7 +50,7 @@ public sealed class AppointmentsController : ControllerBase
         }
         catch (Exception ex)
         {
-
+            return BadRequest(ex.Message);
             throw ex;
         }
 
