@@ -18,11 +18,11 @@ Antes do login o cookie pode estar ausente; o valor enviado segue a implementaç
 
 ### Modais de seleção (paciente, clínica, sala, profissional)
 
-Os componentes de diálogo reutilizam as mesmas rotas de listagem acima e enviam **`page`** / **`pageSize`** na query, exibindo **`mat-paginator`** com `totalRecords` retornado pelo servidor (inclui `GET /users/options`).
+Os componentes de diálogo reutilizam as mesmas rotas de listagem acima e enviam **`page`** / **`pageSize`** na query, exibindo **`mat-paginator`** com `totalRecords` retornado pelo servidor (inclui `GET /user/get-user-list`).
 
 ### Listas paginadas (domínio Psicologia)
 
-Endpoints `GET /patients`, `GET /appointments`, `GET /clinics`, `GET /rooms` e **`GET /users/options`** devem retornar:
+Endpoints `GET /patients`, `GET /appointments`, `GET /clinics`, `GET /rooms` e **`GET /user/get-user-list`** devem retornar:
 
 ```json
 {
@@ -56,7 +56,7 @@ Para montar telas com nomes ou detalhes da relação, o cliente faz chamadas adi
 |-------------------------------------|------------------------------------------------------------|
 | Nome do paciente num agendamento    | `GET /patients/:patientId`                                 |
 | Número da sala                      | `GET /rooms/:roomId`                                       |
-| Nome do profissional (`userId`)     | `GET /users/options` (lista de opções) e cruzamento por `id` |
+| Nome do profissional (`userId`)     | `GET /user/get-user-list` (lista de opções) e cruzamento por `id` |
 
 > **Nota:** no domínio interno/EF, entidades podem ter navegações; o contrato **HTTP** exposto ao frontend segue a regra acima (DTOs sem navegação serializada).
 
@@ -173,7 +173,7 @@ Além disso, o `HttpClient` do Angular expõe o status em `error.status` e o cor
 }
 ```
 
-**Importante:** não incluir `patient`, `room`, `user` ou outros objetos de relação no JSON (apenas FKs). A UI resolve rótulos com `GET /patients/:id`, `GET /rooms/:id` e `GET /users/options`.
+**Importante:** não incluir `patient`, `room`, `user` ou outros objetos de relação no JSON (apenas FKs). A UI resolve rótulos com `GET /patients/:id`, `GET /rooms/:id` e `GET /user/get-user-list`.
 
 ### `GET /appointments/:id`
 
@@ -198,6 +198,18 @@ Além disso, o `HttpClient` do Angular expõe o status em `error.status` e o cor
 **Body:** parcial de `IAppointment` / dos campos acima.
 
 **Sucesso (200):** `IAppointment`.
+
+### `PATCH /appointments/:id/status`
+
+**Body:**
+
+```json
+{
+  "status": 1
+}
+```
+
+**Sucesso (200/204):** `void`.
 
 ### `DELETE /appointments/:id`
 
@@ -308,31 +320,6 @@ Não incluir `rooms` (ou outras coleções de entidades filhas) na clínica; use
 ### `DELETE /rooms/:id`
 
 **Sucesso:** `void`.
-
----
-
-## Profissionais (opções para agendamento)
-
-### `GET /users/options`
-
-Usado para preencher o seletor de psicólogo/profissional.
-
-**Query:** `searchInput`, `page`, `pageSize`, + filtros (mesmo mecanismo de `qparams`).
-
-**Sucesso (200):** lista paginada (`IPaged`), mesmo formato das outras listas:
-
-```json
-{
-  "data": [
-    {
-      "id": "",
-      "name": "",
-      "email": ""
-    }
-  ],
-  "totalRecords": 0
-}
-```
 
 ---
 

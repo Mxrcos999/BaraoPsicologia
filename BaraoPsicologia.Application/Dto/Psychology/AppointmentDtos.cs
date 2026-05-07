@@ -29,3 +29,8 @@ public sealed class PatchAppointmentRequest
     public DateTime? AppointmentDate { get; set; }
     public int? Status { get; set; }
 }
+
+public sealed class PatchAppointmentStatusRequest
+{
+    public int Status { get; set; }
+}

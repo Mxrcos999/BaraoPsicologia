@@ -10,5 +10,6 @@
         public Room Room { get; set; }
         public long RoomId { get; set; }
         public int Status { get; set; }
+        public string SessionSummary { get; set; }
     }
 }

@@ -1,6 +1,7 @@
 using BaraoPsicologia.Application.Dto.Psychology;
 using BaraoPsicologia.Application.Dto.Shared;
 using BaraoPsicologia.Domain.Entities;
+using BaraoPsicologia.Domain.Enums;
 using BaraoPsicologia.Infra.Context;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -99,6 +100,24 @@ public sealed class AppointmentsController : ControllerBase
 
         await _db.SaveChangesAsync(ct);
         return Ok(ToResponse(entity));
+    }
+
+    [HttpPatch("{id:long}/status")]
+    public async Task<IActionResult> PatchStatus(long id, [FromBody] PatchAppointmentStatusRequest body, CancellationToken ct)
+    {
+        if (!Enum.IsDefined(typeof(AppointmentStatus), body.Status))
+        {
+            return BadRequest(new { errors = new Dictionary<string, string[]> { ["status"] = new[] { "Status inválido." } } });
+        }
+
+        var entity = await _db.Appointments.FirstOrDefaultAsync(x => x.Id == id, ct);
+        if (entity == null)
+            return NotFound(new { errors = new Dictionary<string, string[]> { ["id"] = new[] { "Consulta não encontrada." } } });
+
+        entity.Status = body.Status;
+        entity.UpdatedAt = DateTime.UtcNow;
+        await _db.SaveChangesAsync(ct);
+        return NoContent();
     }
 
     [HttpDelete("{id:long}")]
