@@ -19,32 +19,41 @@ public sealed class AppointmentsController : ControllerBase
     public async Task<ActionResult<PagedResult<AppointmentResponse>>> GetList
         ([FromQuery] BaseGetRequest request, CancellationToken ct)
     {
-        var (page, pageSize) = ListQueryHelpers.ReadPaging(Request.Query);
-        var q = _db.Appointments.AsNoTracking();
-        if (!string.IsNullOrWhiteSpace(request.SearchInput))
+        try
         {
-            var s = request.SearchInput.Trim();
-            q = q.Where(a => a.UserId.Contains(s));
+            var (page, pageSize) = ListQueryHelpers.ReadPaging(Request.Query);
+            var q = _db.Appointments.AsNoTracking();
+            if (!string.IsNullOrWhiteSpace(request.SearchInput))
+            {
+                var s = request.SearchInput.Trim();
+                q = q.Where(a => a.UserId.Contains(s));
+            }
+
+            q = q.ApplyCreatedAtFilters(Request.Query);
+            var total = await q.CountAsync(ct);
+            var data = await q.OrderByDescending(a => a.Id)
+                .Skip((page - 1) * pageSize).Take(pageSize)
+                .Select(a => new AppointmentResponse
+                {
+                    Id = a.Id,
+                    PatientId = a.PatientId,
+                    UserId = a.UserId,
+                    AppointmentDate = a.AppointmentDate,
+                    RoomId = a.RoomId,
+                    Status = a.Status,
+                    CreatedAt = a.CreatedAt,
+                    UpdatedAt = a.UpdatedAt
+                })
+                .ToListAsync(ct);
+
+            return Ok(new PagedResult<AppointmentResponse> { Data = data, TotalRecords = total });
+        }
+        catch (Exception ex)
+        {
+
+            throw ex;
         }
 
-        q = q.ApplyCreatedAtFilters(Request.Query);
-        var total = await q.CountAsync(ct);
-        var data = await q.OrderByDescending(a => a.Id)
-            .Skip((page - 1) * pageSize).Take(pageSize)
-            .Select(a => new AppointmentResponse
-            {
-                Id = a.Id,
-                PatientId = a.PatientId,
-                UserId = a.UserId,
-                AppointmentDate = a.AppointmentDate,
-                RoomId = a.RoomId,
-                Status = a.Status,
-                CreatedAt = a.CreatedAt,
-                UpdatedAt = a.UpdatedAt
-            })
-            .ToListAsync(ct);
-
-        return Ok(new PagedResult<AppointmentResponse> { Data = data, TotalRecords = total });
     }
 
     [HttpGet("{id:long}")]
